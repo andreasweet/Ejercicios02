@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     Producto producto = (Producto) result.getData().getExtras().getSerializable("PRODUCTO");
                                     productoList.add(producto);
+                                    Toast.makeText(MainActivity.this, producto.toString()     , Toast.LENGTH_SHORT).show();
 
                                 } else {
                                     Toast.makeText(MainActivity.this, "NO HAY DATOS", Toast.LENGTH_SHORT).show();

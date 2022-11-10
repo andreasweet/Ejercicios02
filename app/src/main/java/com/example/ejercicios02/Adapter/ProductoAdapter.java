@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ejercicios02.Modelos.Producto;
 import com.example.ejercicios02.R;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoVH>{
@@ -24,11 +25,13 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     private List<Producto> objects;
     private int resource;
     private Context context;
+    private NumberFormat nf;
 
     public ProductoAdapter(List<Producto> objects, int resource, Context context) {
         this.objects = objects;
         this.resource = resource;
         this.context = context;
+        this.nf = NumberFormat.getCurrencyInstance();
     }
 
     @NonNull
@@ -47,17 +50,31 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     public void onBindViewHolder(@NonNull ProductoVH holder, int position) {
         Producto producto = objects.get(position);
         holder.lblNombre.setText(producto.getNombre());
-        holder.lblPrecio.setText(String.valueOf(producto.getPrecio()));
+        holder.lblPrecio.setText(nf.format(producto.getPrecio()));
         holder.lblCantidad.setText(String.valueOf(producto.getCantidad()));
         holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                objects.remove(producto);
-                notifyItemRemoved(holder.getAdapterPosition());
+                confirmDelete(producto,holder.getAdapterPosition()).show();
             }
         });
 
 
+    }
+
+    private AlertDialog confirmDelete( Producto producto, int posicion){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Seguro!!!");
+        builder.setCancelable(false);
+        builder.setNegativeButton("CANCELAR", null);
+        builder.setPositiveButton("ELIMINAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                objects.remove(producto);
+                notifyItemRemoved(posicion);
+            }
+        });
+        return builder.create();
     }
 
 

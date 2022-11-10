@@ -27,7 +27,7 @@ public class anadir_Lista_activity extends AppCompatActivity {
         setContentView(R.layout.activity_anadir_lista);
 
         binding = ActivityAnadirListaBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(binding.getRoot());//si quieres hacer el pintarElementos() obligatoriamente tienes que ponerlo y si tiene binding tambien
 
         binding.btnCrearProducto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +36,7 @@ public class anadir_Lista_activity extends AppCompatActivity {
                 if (producto != null){
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("PRODUCTO",producto);
-                    Intent intent = getIntent();
+                    Intent intent = new Intent();
                     intent.putExtras(bundle);
                     setResult(RESULT_OK,intent);
                     finish();

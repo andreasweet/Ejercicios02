@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
     app:cardBackgroundColor="#C9B0F4"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,21 +26,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:hint="Nombre" />
+                android:ellipsize="end"
+                android:hint="Nombre"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/lblPrecioProductoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:hint="Precio" />
+                android:ellipsize="end"
+                android:hint="Precio"
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/lblCantidadProductoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:hint="Cantidad" />
+                android:ellipsize="end"
+                android:hint="Cantidad"
+                android:singleLine="true" />
 
         </LinearLayout>
 
