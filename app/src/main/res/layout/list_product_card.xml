@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    app:cardBackgroundColor="#C9B0F4">
+    app:cardBackgroundColor="#C9B0F4"
+    app:cardCornerRadius="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,35 +19,36 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/lblNombreProductoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="TextView" />
+                android:hint="Nombre" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/lblPrecioProductoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="TextView" />
+                android:hint="Precio" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/lblCantidadProductoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="TextView" />
+                android:hint="Cantidad" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:backgroundTint="#CC79DA"
-            android:text="Button" />
+            android:text="ELIMINAR" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

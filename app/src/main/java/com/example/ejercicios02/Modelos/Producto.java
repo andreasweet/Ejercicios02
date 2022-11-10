@@ -1,10 +1,11 @@
 package com.example.ejercicios02.Modelos;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable {
     private String nombre;
     private float  precio;
     private int cantidad;
-
 
     public Producto(String nombre, float precio, int cantidad) {
         this.nombre = nombre;
@@ -35,7 +36,5 @@ public class Producto {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-
-
 
 }
