@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ejercicios02.MainActivity;
 import com.example.ejercicios02.Modelos.Producto;
 import com.example.ejercicios02.R;
 
@@ -26,12 +27,14 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     private int resource;
     private Context context;
     private NumberFormat nf;
+    private MainActivity mainActivity;
 
     public ProductoAdapter(List<Producto> objects, int resource, Context context) {
         this.objects = objects;
         this.resource = resource;
         this.context = context;
         this.nf = NumberFormat.getCurrencyInstance();
+        mainActivity = (MainActivity) context;
     }
 
     @NonNull
@@ -59,7 +62,49 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateProducto(producto,holder.getAdapterPosition()).show();
+            }
+        });
 
+    }
+
+    private AlertDialog updateProducto( Producto p, int posicion){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(p.getNombre());
+        builder.setCancelable(false);
+
+        //Cuerpo del Alert
+        View cuerpoAlert = LayoutInflater.from(context).inflate(R.layout.activity_anadir_lista,null);
+        EditText txtNombre = cuerpoAlert.findViewById(R.id.txtNombreCrearProducto);
+        txtNombre.setVisibility(View.GONE);
+        Button btnCrear = cuerpoAlert.findViewById(R.id.btnCrearProducto);
+        btnCrear.setVisibility(View.GONE);
+        EditText txtCantidad = cuerpoAlert.findViewById(R.id.txtCantidadCrearProducto);
+        txtCantidad.setText(String.valueOf(p.getCantidad()));
+        EditText txtPrecio = cuerpoAlert.findViewById(R.id.txtPrecioCrearProducto);
+        txtPrecio.setText(String.valueOf(p.getPrecio()));
+        builder.setView(cuerpoAlert);
+
+        //FIN CUERPO ALERT
+        builder.setNegativeButton("CANCELAR", null);
+        builder.setPositiveButton("MODIFICAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(!txtCantidad.getText().toString().isEmpty() &&
+                !txtPrecio.getText().toString().isEmpty()){
+                    p.setCantidad(Integer.parseInt(txtCantidad.getText().toString()));
+                    p.setPrecio(Float.parseFloat(txtPrecio.getText().toString()));
+                    notifyItemChanged(posicion);
+                    mainActivity.calculaValoresFinales();
+                }
+            }
+        });
+
+
+        return builder.create();
     }
 
     private AlertDialog confirmDelete( Producto producto, int posicion){
@@ -72,6 +117,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             public void onClick(DialogInterface dialogInterface, int i) {
                 objects.remove(producto);
                 notifyItemRemoved(posicion);
+                mainActivity.calculaValoresFinales();
             }
         });
         return builder.create();

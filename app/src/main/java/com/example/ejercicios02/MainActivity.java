@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.ejercicios02.databinding.ActivityMainBinding;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ProductoAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private NumberFormat numberFormat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         productoList = new ArrayList<>();
+        numberFormat = NumberFormat.getCurrencyInstance();
+        calculaValoresFinales();
 
         inicializarLaunchers();
 
@@ -122,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
 
                                     Producto producto = (Producto) result.getData().getExtras().getSerializable("PRODUCTO");
                                     productoList.add(producto);
-                                    Toast.makeText(MainActivity.this, producto.toString()     , Toast.LENGTH_SHORT).show();
+                                    adapter.notifyItemInserted(productoList.size()-1);
+                                    calculaValoresFinales();
 
                                 } else {
                                     Toast.makeText(MainActivity.this, "NO HAY DATOS", Toast.LENGTH_SHORT).show();
@@ -140,4 +146,16 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        public void calculaValoresFinales(){
+        int cantidadTotal = 0;
+        float importaTotal = 0;
+
+            for (Producto producto: productoList) {
+                cantidadTotal += producto.getCantidad();
+                importaTotal += producto.getCantidad()* producto.getPrecio();
+
+            }
+            binding.contentMain.lblCantidadTotalMain.setText(String.valueOf(cantidadTotal));
+            binding.contentMain.lblPrecioTotalMain.setText(numberFormat.format(importaTotal));
+        }
 }
